@@ -73,13 +73,13 @@ class MyThread extends Thread
         
         while (!EndIt)
         {
-            synchronized (Board)//κάνω synchronized τον πόρο που δεν θέλω να χρησιμοποιηθεί από κάποιο άλλο thread
+            synchronized (Board)
             {
-                while (Board.CurrentMove != turn)//αν το υπόλοιπο της διαίρεσης είναι διάφορο του 1
-                {                            //αν είναι διάφορο του 1, σημαίνει ότι ειναι η σειρά του BlackPlayer να παίξει
-                    try                     //Οσο δεν είναι η σειρά μου να παίξω
+                while (Board.CurrentMove != turn)
+                {                           
+                    try                     
                     {
-                        Board.wait ();    //Κοιμάμαι μέχρι να με ξυπνήσει κάποιος (notify)
+                        Board.wait ();
                     }
                     catch (InterruptedException ex)
                     {
