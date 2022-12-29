@@ -10,36 +10,36 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Server_For_Many_Clients {
-public static void main(String args[]){
+    public static void main(String args[]){
 
-    Socket s=null;
-    ServerSocket ss2=null;
-    System.out.println("Server Listening......");
-    try{
-        ss2 = new ServerSocket(4445); // can also use static final PORT_NUM , when defined
-    }
-    catch(IOException e){
-        e.printStackTrace();
-        System.out.println("Server error");
-    }
-
-    while(true){
+        Socket s=null;
+        ServerSocket ss2=null;
+        System.out.println("Server Listening......");
         try{
-            s= ss2.accept();
-            System.out.println("connection Established");
-            System.out.println(ss2.getInetAddress());
-            System.out.println(ss2.getLocalPort());
-            System.out.println(ss2.getInetAddress().getHostName());
-                         
-            ServerThread st=new ServerThread(s);
-            st.start();
+            ss2 = new ServerSocket(4445); // can also use static final PORT_NUM , when defined
         }
-        catch(Exception e){
+        catch(IOException e){
             e.printStackTrace();
-            System.out.println("Connection Error");
+            System.out.println("Server error");
+        }
+
+        while(true){
+            try{
+                s= ss2.accept();
+                System.out.println("connection Established");
+                System.out.println(ss2.getInetAddress());
+                System.out.println(ss2.getLocalPort());
+                System.out.println(ss2.getInetAddress().getHostName());
+
+                ServerThread st=new ServerThread(s);
+                st.start();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+                System.out.println("Connection Error");
+            }
         }
     }
-}
 }
 
 class ServerThread extends Thread{  
@@ -75,11 +75,11 @@ class ServerThread extends Thread{
                 line=is.readLine();
             }
         } catch (IOException e) {
-            line=this.getName(); //reused String line for getting thread name
+            line=this.getName(); 
             System.out.println("IO Error/ Client "+line+" terminated abruptly");
         }
         catch(NullPointerException e){
-            line=this.getName(); //reused String line for getting thread name
+            line=this.getName(); 
             System.out.println("Client "+line+" Closed");
         }
 
